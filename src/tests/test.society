@@ -1,0 +1,30 @@
+var a = 5
+if 3+4+5=5+4+3 then
+    var a = 4
+    print a
+end
+if 1=2 then
+    var a = 3
+    print a   
+end
+
+var b = "hi"
+if true then
+    var b = b + " there the year is " + 2022
+    if false then
+        var b = b + " or is it 2021?"
+    end
+end
+
+print b
+
+"""
+comment test
+example
+yay
+cool
+"""
+
+"""
+another comment
+"""
