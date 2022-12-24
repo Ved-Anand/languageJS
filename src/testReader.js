@@ -1,5 +1,5 @@
 const fs = require("fs");
-const { parseLex }= require("./parsers/LexicalParser");
+const { parseLex } = require("./parsers/LexicalParser");
 
 const commands = fs.readdirSync("./tests").filter(d => d.endsWith('.society')); 
 let fileData;

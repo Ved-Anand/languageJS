@@ -1,6 +1,6 @@
 const errorCheck = require("../ErrorHandler");
 const keywords = require("../enums").keywords;
-const tree = [];
+const tree = []; //essentially this will become an Abstract Syntax Tree
 
 function lineParse(line, lineNumber) {
     line = line.trim(); //eliminate forward and backward useless white space 

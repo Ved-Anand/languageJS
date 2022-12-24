@@ -29,7 +29,8 @@ function parseLex(fileData) {
       if (type == fileName || (fileName == "multicomment" && type == '"""')) {
         let pull = require(`../keywords/${fileName}`);
         let output = pull.read(tree, elem, variables);
-        if (type == "if" || type == '"""') elem = output;
+
+        if (type == "if" || type == '"""' || type == "#") elem = output; //these 3 types specifically edit the elem value by adding to it and then returning
         
       }
     }
