@@ -7,3 +7,5 @@ Currently lots of bugs and errors but I'm less focused on that and more focused 
 to take in var a = 3, var b = 2, and know that (a+b==5) should return true when its inputted. 
 
 It's been pretty fun so far and a nice challenge to test my javascript proficiency.
+
+Starting file is src/testReader.js which currently just runs the one file in src/tests/. Didn't know what filetype to pick so I just did the first word I thought of.
