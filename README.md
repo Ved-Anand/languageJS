@@ -6,6 +6,6 @@ been trying to do if statements (but this is still a very fresh thing and I've o
 Currently lots of bugs and errors but I'm less focused on that and more focused on actually implementing "stuff". A parser for conditions is proving very difficult, for example being able
 to take in var a = 3, var b = 2, and know that (a+b==5) should return true when its inputted. 
 
-It's been pretty fun so far and a nice challenge to test my javascript proficiency.
+A lot of my code is very unclean and unneccessarily lengthy as well as hard to understand because I forgot to do comments at times or have spacing for human readability. Overall though, it's been pretty fun so far and a nice challenge to test my javascript proficiency. 
 
 Starting file is src/testReader.js which currently just runs the one file in src/tests/. Didn't know what filetype to pick so I just did the first word I thought of.
