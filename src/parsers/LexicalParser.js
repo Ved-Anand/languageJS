@@ -22,7 +22,6 @@ function parseLex(fileData) {
     //console.log(type);
 
     //print Handling (should be followed by stringLiteral or number literal)
-    //const keywordNames = fs.readdirSync("C:\\Users\\vedan\\OneDrive\\Documents\\Coding Files\\languageJS\\src\\keywords").filter(d => d.endsWith('.js'));
     let filePath = path.join(__dirname, '../keywords');
     const keywordNames = fs.readdirSync(filePath).filter(d => d.endsWith(".js"));  
     for (let file of keywordNames) {
