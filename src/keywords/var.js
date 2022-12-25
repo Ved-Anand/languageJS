@@ -51,18 +51,7 @@ function read (tree, elem, variables) {
                     }
                     var duplicateArrayPos = checkDuplicate(variables, tree[elem+1].value);
                     duplicationPush(variables, tree, elem, value);
-                    /*
-                    if (duplicateArrayPos == undefined) { 
-                        variables.push({
-                            name: tree[elem+1].value,
-                            value: value
-                        });
-                    } else {
-                        variables[duplicateArrayPos] = {
-                            name: tree[elem+1].value,
-                            value: value
-                        }
-                    } */
+                    
                   }
 
                 // no var being set to another var, so instead of var a = b, its something like var a = <integer>

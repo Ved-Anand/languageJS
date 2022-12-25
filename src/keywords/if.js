@@ -1,11 +1,34 @@
 const { conditionHandler } = require("../parsers/conditions/conditionHandler"); 
+const keywords = require("../enums").keywords;
 
 function read (tree, elem, variables) {
 
     if (elem==0 || tree[elem-1].type == 'newLine') {  //must start line not be like in the middle 
-        if (tree[elem+1].type == 'literal' && tree[elem+2].type == 'then') { //for now no support for strings in if statements (added later)
+        if (tree[elem+1].type == 'literal') { //for now no support for strings in if statements (added later)
             try {
-                if (conditionHandler(tree[elem+1].value, variables, tree, elem)) { //condition true
+                let conditionValue = '';
+                if (tree[elem+2].type == "then") {
+                    conditionValue = conditionHandler(tree[elem+1].value, variables, tree, elem);
+                } else {
+                    for (var i = elem+1; i < tree.length; i++) {
+                        if (tree[i].type == "then") {
+                            if (conditionValue == '') {
+                                console.log("Could not find condition for if statement.");
+                                process.exit();
+                            }
+                            conditionValue = conditionHandler(conditionValue, variables, tree, elem);
+                            break
+                        } 
+                        if (tree[i].type == "newLine") {
+                            console.log("Could not find then statement.");
+                            process.exit();
+                        }
+                        if (tree[i].type == "literal") conditionValue = conditionValue + tree[i].value;
+                        if (keywords.includes(tree[i].type)) conditionValue = conditionValue + tree[i].type;
+                    }
+                }
+                
+                if (conditionValue) { //condition true
 
                     //do nothing bc it should just run the following lines
 
@@ -38,15 +61,6 @@ function read (tree, elem, variables) {
                             return a;
                         }
                     }
-
-                    let belowIfs = [];
-                    for (var t = elem; t < tree.length; t++) { //now comb through after if for ends
-
-                        if (tree[t].type == "if") belowIfs.push(t) //push index of end statement
-
-                    }
-
-                    // 13, 9, 15
 
                     if (endStatements.length > 0) {
                         elem = endStatements[endStatements.length - 1 - aboveIfs]; //set position to default last end statement, if aboveIfs is 1 go to second to last and so on

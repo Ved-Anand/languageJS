@@ -1,5 +1,5 @@
 var a = 5
-if 3+4+5=5+4+3 then
+if 3 + 4 + 4 = 5+4 + 2 then
     var a = 4
     print a
 end
@@ -7,7 +7,9 @@ if 1=2 then
     var a = 3
     print a   
 end
-# hi
+
+# single line comment here
+
 var b = "hi"
 if true then
     var b = b + " there the year is " + 2022
@@ -18,11 +20,16 @@ end
 
 print b
 
+var a = 3
+var b = 2
+if a+b = 2+a then
+    print "if condition"
+end
+
+
 """
 comment test
 example
-yay
-cool
 """
 
 """

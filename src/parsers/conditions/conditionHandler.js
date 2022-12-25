@@ -1,4 +1,5 @@
 const operations = ["+", "-", "*", "/"];
+const math = require ("mathjs");
 const { checkVariables } = require("../../utils/checkVariables");
 
 function conditionHandler(value, variables, tree) {
@@ -18,197 +19,57 @@ function conditionHandler(value, variables, tree) {
     }
 
     //variables and whatnot early returns
-    /*
-    if (leftCond == rightCond) return true
-    let leftVariableComplexity, rightVariableComplexity = false;
-    for (var u of operations) { 
-        if (leftCond.includes(u)) leftVariableComplexity = true
-        if (rightCond.includes(u)) rightVariableComplexity = true
-    }
-    if (!leftVariableComplexity) {
-        let leftVarValue = checkVariables(variables, leftCond, tree);
-        if (leftVarValue != undefined) leftCond = variables[leftVarValue].value;
-    } 
-    if (!rightVariableComplexity) {
-        let rightVarValue = checkVariables(variables, rightCond);
-        if (rightVarValue != undefined) rightCond = variables[rightVarValue].value;
-    }
-    */
-
-
-    //ok parsing 
-    let leftCondParser = leftCond.split('');
+    
+    let leftCondParser = leftCond.split(''); //a+3
     let rightCondParser = rightCond.split('');
 
-    let currentText = '';
-    let finalLeftResult;
-    let operationHandle = true;
-    let operation = '';
-    let operationChar = '';
+    if (leftCond == rightCond) return true
 
-    //LEFT
-
-    for (var i = 0; i < leftCondParser.length; i++) {
-        if (!isNaN(leftCondParser[i])) {
-            currentText += leftCondParser[i]; //result: 1, 1-1
-            if (i == leftCondParser.length - 1 && operationHandle == false) {
-                let pull = require(`./${operation}`);
-                (finalLeftResult != undefined) ? finalLeftResult += pull.operate(currentText) : finalLeftResult = pull.operate(currentText)
-                currentText = '';
-                operationHandle = true;
-                operation = '';
-                operationChar = '';
-            } else if (i == leftCondParser.length - 1 && operationHandle == true) {
-                let onlyNumber = false
-                for (var t of operations) { //just discovered of is a thing in javascript (i only thought it was in like python)
-                    if (leftCond.includes(t)) onlyNumber = true
-                }
-                if (onlyNumber) {
-                    let pull = require(`./${operation}`);
-                    finalLeftResult = pull.operate(String(finalLeftResult) + operationChar + currentText );
-                    currentText = '';
-                    operationHandle = true;
-                    operation = '';
-                    operationChar = '';
-                } else finalLeftResult = Number(currentText);
-            } else {
-                continue;
+    //not great yet because does not account for like multi letter variables. 
+    let leftResult = '';
+    for (var a of leftCondParser) {
+        let leftVarValue = undefined;
+        let leftVarPosition = undefined;
+        for (var c = 0; c < variables.length; c++) {
+            if (variables[c].name == a) {
+                leftVarValue = true;
+                leftVarPosition = c;
+                break
             }
         }
-        if (operations.includes(leftCondParser[i]) && operationHandle==true) {
-            operationHandle = false;
-            currentText += leftCondParser[i];
-            switch (leftCondParser[i]) {
-                case "+":
-                    operation = "add";
-                    operationChar = "+";
-                    break
-                case "-":
-                    operation = "subtract";
-                    operationChar = "-";
-                    break
-                case "*":
-                    operation = "multiply"
-                    operationChar = "*";
-                    break
-                case "/":
-                    operation = "divide"
-                    operationChar = "/";
-                    break
-            }
-        } else if (operations.includes(leftCondParser[i]) && operationHandle == false) {
-            let pull = require(`./${operation}`);
-            (finalLeftResult != undefined) ? finalLeftResult += pull.operate(currentText) : finalLeftResult = pull.operate(currentText)
-            //console.log(finalLeftResult);
-            currentText = '';
-            switch (leftCondParser[i]) {
-                case "+":
-                    operation = "add";
-                    operationChar = "+";
-                    break
-                case "-":
-                    operation = "subtract";
-                    operationChar = "-";
-                    break
-                case "*":
-                    operation = "multiply"
-                    operationChar = "*";
-                    break
-                case "/":
-                    operation = "divide"
-                    operationChar = "/";
-                    break
-            }
-            
-            operationHandle = true;
+        if (leftVarValue != undefined) {
+            leftResult += variables[leftVarPosition].value;
+
+        } else {
+            leftResult += a;
         }
     }
+    leftCond = leftResult;
 
-    //RIGHT
 
-    let finalRightResult;
-    currentText = '';
-    operationHandle = true;
-    operation = '';
-    operationChar = '';
-
-    for (var w = 0; w < rightCondParser.length; w++) {
-        if (!isNaN(rightCondParser[w])) {
-            currentText += rightCondParser[w];
-            if (w == rightCondParser.length - 1 && operationHandle == false) {
-                let pull = require(`./${operation}`);
-                (finalRightResult != undefined) ? finalRightResult += pull.operate(currentText) : finalRightResult = pull.operate(currentText)
-
-                currentText = '';
-                operationHandle = true;
-                operation = '';
-                operationChar = '';
-            } else if (w == rightCondParser.length - 1 && operationHandle == true) {
-                let onlyNumber = false
-                for (var t of operations) { //just discovered of is a thing in javascript (i only thought it was in like python)
-                    if (rightCond.includes(t)) onlyNumber = true
-                }
-                if (onlyNumber) {
-                    let pull = require(`./${operation}`);
-                    finalRightResult = pull.operate(String(finalRightResult) + operationChar + currentText );
-                    currentText = '';
-                    operationHandle = true;
-                    operation = '';
-                    operationChar = '';
-                } else finalRightResult = Number(currentText);
-            } else {
-                continue;
+    let rightResult = '';
+    for (var b of rightCondParser) {
+        let rightVarValue = undefined;
+        let rightVarPosition = undefined;
+        for (var d = 0; d < variables.length; d++) {
+            if (variables[d].name == b) {
+                rightVarValue = true;
+                rightVarPosition = d;
+                break
             }
         }
-        if (operations.includes(rightCondParser[w]) && operationHandle==true) {
-            operationHandle = false;
-            currentText += rightCondParser[w];
-            switch (rightCondParser[w]) {
-                case "+":
-                    operation = "add";
-                    operationChar = "+";
-                    break
-                case "-":
-                    operation = "subtract";
-                    operationChar = "-";
-                    break
-                case "*":
-                    operation = "multiply"
-                    operationChar = "*";
-                    break
-                case "/":
-                    operation = "divide"
-                    operationChar = "/";
-                    break
-            }
-        } else if (operations.includes(rightCondParser[w]) && operationHandle == false) {
-            let pull = require(`./${operation}`);
-            (finalRightResult != undefined) ? finalRightResult += pull.operate(currentText) : finalRightResult = pull.operate(currentText) // just realized ternaries exist
-            currentText = '';
-            switch (rightCondParser[w]) {
-                case "+":
-                    operation = "add";
-                    operationChar = "+";
-                    break
-                case "-":
-                    operation = "subtract";
-                    operationChar = "-";
-                    break
-                case "*":
-                    operation = "multiply"
-                    operationChar = "*";
-                    break
-                case "/":
-                    operation = "divide"
-                    operationChar = "/";
-                    break
-            }
-            operationHandle = true;
+        if (rightVarValue != undefined) {
+            rightResult += variables[rightVarPosition].value;
+
+        } else {
+            rightResult += b;
         }
     }
+    rightCond = rightResult;
 
-    //console.log(finalLeftResult);
-    //console.log(finalRightResult);
+    let finalLeftResult = math.evaluate(leftCond);
+    let finalRightResult = math.evaluate(rightCond);
+
     //PUTTING IT ALL TOGETHER
 
     return (finalLeftResult == finalRightResult) ? true : false
@@ -219,3 +80,4 @@ module.exports = {
 }
 
 // conditionHandler(3+3=4+2) returns true for instance because 6=6.
+//console.log(conditionHandler("3+3=4+2"));
