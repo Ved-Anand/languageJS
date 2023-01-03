@@ -42,6 +42,7 @@ function read (tree, elem, variables) {
                     for (var i = 0; i < elem; i++) { //goes to line before this current if statement.
                         
                         if (tree[i].type == "if") aboveIfs++;
+                        if (tree[i].type == "function") aboveIfs++;
                         
                     }
 
@@ -55,7 +56,7 @@ function read (tree, elem, variables) {
 
                     let ifSighted = false;
                     for (var a = elem+1; a < tree.length; a++) { //now comb through after if for ends
-                        if (tree[a].type == "if") ifSighted = true;
+                        if (tree[a].type == "if" || tree[a].type == "function") ifSighted = true;
                         if (tree[a].type == "end") endStatements.push(a) //push index of end statement
                         if (tree[a].type == "end" && !ifSighted) {
                             return a;

@@ -1,5 +1,7 @@
-const keywords = ["print", "var", "=", "+", "-", "*", "/", "if", "end", "then", '"""', "#"];
+const keywords = ["print", "var", "=", "+", "-", "*", "/", "if", "function", "end", "then", '"""', "#"];
+const loops = ["if", "function"]
 
 module.exports = {
-    keywords
+    keywords,
+    loops
 }

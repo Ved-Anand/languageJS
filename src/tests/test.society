@@ -1,7 +1,7 @@
 var a = 5
 if 3 + 4 + 4 = 5+4 + 2 then
     var a = 4
-    print a
+    print "My value is " + a
 end
 if 1=2 then
     var a = 3
@@ -12,9 +12,9 @@ end
 
 var b = "hi"
 if true then
-    var b = b + " there the year is " + 2022
+    var b = b + " there the year is " + 2023
     if false then
-        var b = b + " or is it 2021?"
+        var b = b + " or is it 2022?"
     end
 end
 
@@ -23,15 +23,13 @@ print b
 var a = 3
 var b = 2
 if a+b = 2+a then
-    print "if condition"
+    print "I was printed because of an if condition"
 end
 
+function hello then
+    if true then
+        print "Hello there!"
+    end
+end
 
-"""
-comment test
-example
-"""
-
-"""
-another comment
-"""
+hello()

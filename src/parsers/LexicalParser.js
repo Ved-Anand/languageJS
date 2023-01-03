@@ -5,6 +5,8 @@ const { lineParse, tree } = require("./LineParser");
 function parseLex(fileData) {
 
   let variables = [];
+  let functions = [];
+
   //split by new line 
   const linesInFile = fileData.split(/\r?\n/); 
   let lineNumber = 0;
@@ -28,9 +30,9 @@ function parseLex(fileData) {
       let fileName = file.substring(0, file.length-3);
       if (type == fileName || (fileName == "multicomment" && type == '"""')) {
         let pull = require(`../keywords/${fileName}`);
-        let output = pull.read(tree, elem, variables);
+        let output = pull.read(tree, elem, variables, functions);
 
-        if (type == "if" || type == '"""' || type == "#") elem = output; //these 3 types specifically edit the elem value by adding to it and then returning
+        if (type == "if" || type == '"""' || type == "#" || type == "function" || type == "literal" || type == "end") elem = output; //these 3 types specifically edit the elem value by adding to it and then returning
         
       }
     }
